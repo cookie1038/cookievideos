@@ -1,0 +1,28 @@
+name: videos_update
+ 
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+ 
+jobs:
+  build:
+    runs-on: ubuntu-latest
+ 
+    steps:
+    - uses: actions/checkout@v2
+ 
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.8'
+ 
+    - name: Configure timezone
+      run: echo "Asia/Shanghai" > /etc/timezone
+
+    - name: Install dependencies
+      run: pip install requests
+        
+    - name: Run pytest
+      run: update_daily_videos.py
